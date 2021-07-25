@@ -1,0 +1,22 @@
+set(TITLE Isoberry)
+
+cmake_minimum_required(VERSION 3.19)
+set(CMAKE_CXX_STANDARD 20)
+project(${TITLE})
+
+set(SRC_FILES ${PROJECT_SOURCE_DIR}/main.cpp)
+
+add_executable(${TITLE} ${SRC_FILES})
+
+# Install Vulkan SDK - https://vulkan.lunarg.com/sdk/home
+find_package(Vulkan REQUIRED FATAL_ERROR)
+include_directories(${Vulkan_INCLUDE_DIRS})
+target_link_libraries (${TITLE} PRIVATE ${Vulkan_LIBRARIES})
+
+# glfw and glm are submodules and handled without adding to the system
+    # glfw
+    add_subdirectory(ext/glfw EXCLUDE_FROM_ALL)
+    target_link_libraries(${TITLE} PRIVATE glfw)
+    # glm
+    add_subdirectory(ext/glm EXCLUDE_FROM_ALL)
+    target_link_libraries(${TITLE} PRIVATE glm)
