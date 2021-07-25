@@ -4,7 +4,9 @@ cmake_minimum_required(VERSION 3.19)
 set(CMAKE_CXX_STANDARD 20)
 project(${TITLE})
 
-set(SRC_FILES ${PROJECT_SOURCE_DIR}/main.cpp)
+set(SRC_FILES main.cpp
+        vulkan/HelloTriangleApplication.cpp
+        vulkan/HelloTriangleApplication.h vulkan/instance/validation/ValidationLayerSupport.cpp vulkan/instance/validation/ValidationLayerSupport.h vulkan/device/AvailableExtensions.cpp vulkan/device/AvailableExtensions.h vulkan/device/ChooseDevice.cpp vulkan/device/ChooseDevice.h vulkan/instance/Instance.cpp vulkan/instance/Instance.h)
 
 add_executable(${TITLE} ${SRC_FILES})
 
