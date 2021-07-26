@@ -1,6 +1,6 @@
 #include "ChoosePhysicalDevice.h"
 
-VkPhysicalDevice pickPhysicalDevice(VkInstance& instance)
+VkPhysicalDevice pickPhysicalDevice(VkInstance& instance, VkSurfaceKHR& surface)
 {
     VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
     uint32_t deviceCount = 0;
@@ -12,7 +12,7 @@ VkPhysicalDevice pickPhysicalDevice(VkInstance& instance)
     std::vector<VkPhysicalDevice> devices(deviceCount);
     vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
     for (const auto& device : devices) {
-        if (isDeviceSuitable(device)) {
+        if (isDeviceSuitable(device, surface)) {
             physicalDevice = device;
         }
     }
@@ -39,7 +39,7 @@ VkPhysicalDevice pickPhysicalDevice(VkInstance& instance)
     return physicalDevice;
 }
 
-bool isDeviceSuitable(VkPhysicalDevice device)
+bool isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR& surface)
 {
     VkPhysicalDeviceProperties deviceProperties;
     vkGetPhysicalDeviceProperties(device, &deviceProperties);
@@ -49,7 +49,7 @@ bool isDeviceSuitable(VkPhysicalDevice device)
     VkPhysicalDeviceFeatures deviceFeatures;
     vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
 
-    QueueFamilyIndices indices = findQueueFamilies(device);
+    QueueFamilyIndices indices = findQueueFamilies(device, surface);
 
     return indices.isComplete();
 }
@@ -64,7 +64,8 @@ int rateDeviceSuitability(VkPhysicalDevice device) {
     int score = 0;
 
     // Discrete GPUs have a significant performance advantage
-    if (deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU) {
+    if (deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
+    {
         score += 1000;
     }
 

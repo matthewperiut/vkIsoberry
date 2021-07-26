@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <vector>
+#include <set>
 
 extern bool enablePhysicalDeviceProperties2;
 extern bool enablePortabilitySubset;

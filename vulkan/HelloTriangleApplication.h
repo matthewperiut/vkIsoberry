@@ -4,6 +4,7 @@
 
 #include "device/ChoosePhysicalDevice.h"
 #include "device/CreateLogicalDevice.h"
+#include "window/CreateSurface.h"
 
 class HelloTriangleApplication {
 private:
@@ -12,10 +13,14 @@ private:
     GLFWwindow* window;
 
     VkInstance instance;
-    VkPhysicalDevice physicalDevice;
 
+    VkPhysicalDevice physicalDevice;
     VkDevice device;
+
     VkQueue graphicsQueue;
+    VkQueue presentQueue;
+
+    VkSurfaceKHR surface;
 
 public:
     void run();
