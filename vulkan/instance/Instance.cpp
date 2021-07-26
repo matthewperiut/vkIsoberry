@@ -4,7 +4,7 @@
 
 #include "Instance.h"
 
-void createInstance(const char* name, uint32_t versionVkMakeVersion, VkInstance& instance, bool enableValidationLayers, std::vector<const char*> validationLayers)
+void createInstance(const char* name, uint32_t versionVkMakeVersion, VkInstance& instance)
 {
     if (enableValidationLayers)
     {

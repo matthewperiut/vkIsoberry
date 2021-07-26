@@ -20,8 +20,9 @@ void HelloTriangleApplication::initWindow()
 
 void HelloTriangleApplication::initVulkan()
 {
-    createInstance("Hello Triangle", VK_MAKE_VERSION(1,0,0), instance, enableValidationLayers, validationLayers);
-    pickPhysicalDevice(instance);
+    createInstance("Hello Triangle", VK_MAKE_VERSION(1,0,0), instance);
+    physicalDevice = pickPhysicalDevice(instance);
+    createLogicalDevice(instance, physicalDevice, device, graphicsQueue);
 }
 
 void HelloTriangleApplication::mainLoop()
@@ -34,6 +35,7 @@ void HelloTriangleApplication::mainLoop()
 
 void HelloTriangleApplication::cleanup()
 {
+    vkDestroyDevice(device, nullptr);
     vkDestroyInstance(instance, nullptr);
 
     glfwDestroyWindow(window);

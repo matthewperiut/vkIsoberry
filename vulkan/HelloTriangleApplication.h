@@ -1,14 +1,9 @@
-#define GLFW_INCLUDE_VULKAN
-#include <GLFW/glfw3.h>
-
-#include <iostream>
-#include <stdexcept>
-#include <cstdlib>
-#include <cstring>
-#include <vector>
+#include "CommonVulkanInclude.h"
 
 #include "instance/Instance.h"
-#include "device/ChooseDevice.h"
+
+#include "device/ChoosePhysicalDevice.h"
+#include "device/CreateLogicalDevice.h"
 
 class HelloTriangleApplication {
 private:
@@ -16,17 +11,11 @@ private:
     const uint32_t HEIGHT = 720;
     GLFWwindow* window;
 
-    const std::vector<const char*> validationLayers = {
-            "VK_LAYER_KHRONOS_validation"
-    };
-
-#ifdef NDEBUG
-    const bool enableValidationLayers = false;
-#else
-    const bool enableValidationLayers = true;
-#endif
-
     VkInstance instance;
+    VkPhysicalDevice physicalDevice;
+
+    VkDevice device;
+    VkQueue graphicsQueue;
 
 public:
     void run();

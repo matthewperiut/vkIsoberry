@@ -6,7 +6,7 @@ project(${TITLE})
 
 set(SRC_FILES main.cpp
         vulkan/HelloTriangleApplication.cpp
-        vulkan/HelloTriangleApplication.h vulkan/instance/validation/ValidationLayerSupport.cpp vulkan/instance/validation/ValidationLayerSupport.h vulkan/device/AvailableExtensions.cpp vulkan/device/AvailableExtensions.h vulkan/device/ChooseDevice.cpp vulkan/device/ChooseDevice.h vulkan/instance/Instance.cpp vulkan/instance/Instance.h)
+        vulkan/HelloTriangleApplication.h vulkan/instance/validation/ValidationLayerSupport.cpp vulkan/instance/validation/ValidationLayerSupport.h vulkan/device/AvailableExtensions.cpp vulkan/device/AvailableExtensions.h vulkan/device/ChoosePhysicalDevice.cpp vulkan/device/ChoosePhysicalDevice.h vulkan/instance/Instance.cpp vulkan/instance/Instance.h "vulkan/device/QueueFamilies.cpp" "vulkan/device/QueueFamilies.h" vulkan/device/CreateLogicalDevice.cpp vulkan/device/CreateLogicalDevice.h vulkan/CommonVulkanInclude.h vulkan/CommonVulkanInclude.cpp)
 
 add_executable(${TITLE} ${SRC_FILES})
 

@@ -1,4 +1,5 @@
-#include "ChooseDevice.h"
+#include "ChoosePhysicalDevice.h"
+#include "QueueFamilies.h"
 
 VkPhysicalDevice& pickPhysicalDevice(VkInstance& instance)
 {
@@ -31,10 +32,12 @@ bool isDeviceSuitable(VkPhysicalDevice device)
 
     std::cout << "Device Name: " << deviceProperties.deviceName << std::endl;
 
-    VkPhysicalDeviceFeatures deviceFeatures;
-    vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
+    //VkPhysicalDeviceFeatures deviceFeatures;
+    //vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
 
-    return true;
+    QueueFamilyIndices indices = findQueueFamilies(device);
+
+    return indices.isComplete();
 }
 
 int rateDeviceSuitability(VkPhysicalDevice device) {
