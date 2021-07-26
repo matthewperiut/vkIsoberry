@@ -2,4 +2,4 @@
 
 #include "../CommonVulkanInclude.h"
 
-void printExtensions();
+void availableExtensionsCheck(bool print = false);

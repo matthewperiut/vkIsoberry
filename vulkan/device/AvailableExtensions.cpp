@@ -1,6 +1,6 @@
 #include "AvailableExtensions.h"
 
-void printExtensions()
+void availableExtensionsCheck(bool print)
 {
     uint32_t extensionCount = 0;
     vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
@@ -8,9 +8,14 @@ void printExtensions()
     std::vector<VkExtensionProperties> extensions(extensionCount);
     vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
 
-    std::cout << "available extensions:\n";
+    if(print)
+        std::cout << "available extensions:\n";
+
     for (const auto& extension : extensions)
     {
-        std::cout << '\t' << extension.extensionName << '\n';
+        if(print)
+            std::cout << '\t' << extension.extensionName << '\n';
+        if(std::string(extension.extensionName) == "VK_KHR_get_physical_device_properties2")
+            enablePhysicalDeviceProperties2 = true;
     }
 }

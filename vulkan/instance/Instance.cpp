@@ -6,6 +6,8 @@
 
 void createInstance(const char* name, uint32_t versionVkMakeVersion, VkInstance& instance)
 {
+    availableExtensionsCheck();
+
     if (enableValidationLayers)
     {
         if(!checkValidationLayerSupport(validationLayers))
@@ -27,9 +29,25 @@ void createInstance(const char* name, uint32_t versionVkMakeVersion, VkInstance&
     createInfo.pApplicationInfo = &appInfo;
     uint32_t glfwExtensionCount = 0;
     const char** glfwExtensions;
+    const char* totalExtensions[3]; // This is NOT arbitrary, max output of glfwExtensions is two.
     glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
-    createInfo.enabledExtensionCount = glfwExtensionCount;
-    createInfo.ppEnabledExtensionNames = glfwExtensions;
+
+    // Portability Subset handling
+    const char* values[3]; // This is NOT arbitrary, max output of glfwExtensions is two.
+    if(enablePhysicalDeviceProperties2)
+    {
+        for (int i = 0; i < glfwExtensionCount; i++)
+            values[i] = glfwExtensions[i];
+        values[glfwExtensionCount] = "VK_KHR_get_physical_device_properties2";
+        createInfo.enabledExtensionCount = glfwExtensionCount + 1;
+        createInfo.ppEnabledExtensionNames = values;
+    }
+    else
+    {
+        createInfo.enabledExtensionCount = glfwExtensionCount;
+        createInfo.ppEnabledExtensionNames = glfwExtensions;
+    }
+
     if (enableValidationLayers)
     {
         createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());

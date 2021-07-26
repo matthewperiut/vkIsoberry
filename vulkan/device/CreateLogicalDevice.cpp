@@ -20,7 +20,16 @@ void createLogicalDevice(VkInstance& instance, VkPhysicalDevice& physicalDevice,
     createInfo.pQueueCreateInfos = &queueCreateInfo;
     createInfo.queueCreateInfoCount = 1;
     createInfo.pEnabledFeatures = &deviceFeatures;
-    createInfo.enabledExtensionCount = 0;
+    if(enablePortabilitySubset)
+    {
+        createInfo.enabledExtensionCount = 1;
+        const char* deviceExtension = "VK_KHR_portability_subset";
+        createInfo.ppEnabledExtensionNames = &deviceExtension;
+    }
+    else
+    {
+        createInfo.enabledExtensionCount = 0;
+    }
 
     if(enableValidationLayers)
     {

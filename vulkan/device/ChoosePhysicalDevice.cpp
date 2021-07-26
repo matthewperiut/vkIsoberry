@@ -1,7 +1,6 @@
 #include "ChoosePhysicalDevice.h"
-#include "QueueFamilies.h"
 
-VkPhysicalDevice& pickPhysicalDevice(VkInstance& instance)
+VkPhysicalDevice pickPhysicalDevice(VkInstance& instance)
 {
     VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
     uint32_t deviceCount = 0;
@@ -22,6 +21,21 @@ VkPhysicalDevice& pickPhysicalDevice(VkInstance& instance)
         throw std::runtime_error("failed to find a suitable GPU!");
     }
 
+    uint32_t extensionsCount = 0;
+    vkEnumerateDeviceExtensionProperties( physicalDevice, nullptr, &extensionsCount, nullptr );
+    std::vector<VkExtensionProperties> availableExtensions(extensionsCount);
+    vkEnumerateDeviceExtensionProperties( physicalDevice, nullptr, &extensionsCount, availableExtensions.data() );
+    for (const auto& extension : availableExtensions)
+    {
+        //std::cout << extension.extensionName << std::endl;
+        if (std::string(extension.extensionName) == "VK_KHR_portability_subset")
+        {
+            // Not useful, because I need this information before making instance. Here as a placeholder
+            enablePortabilitySubset = true;
+        }
+    }
+
+
     return physicalDevice;
 }
 
@@ -32,8 +46,8 @@ bool isDeviceSuitable(VkPhysicalDevice device)
 
     std::cout << "Device Name: " << deviceProperties.deviceName << std::endl;
 
-    //VkPhysicalDeviceFeatures deviceFeatures;
-    //vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
+    VkPhysicalDeviceFeatures deviceFeatures;
+    vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
 
     QueueFamilyIndices indices = findQueueFamilies(device);
 
