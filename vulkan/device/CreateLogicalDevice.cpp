@@ -1,5 +1,5 @@
 #include "CreateLogicalDevice.h"
-#include "QueueFamilies.h"
+#include "../queue families/QueueFamilies.h"
 
 void createLogicalDevice(VkInstance& instance, VkPhysicalDevice& physicalDevice, VkDevice& device, VkQueue& graphicsQueue, VkQueue& presentQueue, VkSurfaceKHR& surface)
 {
@@ -26,16 +26,14 @@ void createLogicalDevice(VkInstance& instance, VkPhysicalDevice& physicalDevice,
     createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
     createInfo.pQueueCreateInfos = queueCreateInfos.data();
     createInfo.pEnabledFeatures = &deviceFeatures;
+
     if(enablePortabilitySubset)
     {
-        createInfo.enabledExtensionCount = 1;
-        const char* deviceExtension = "VK_KHR_portability_subset";
-        createInfo.ppEnabledExtensionNames = &deviceExtension;
+        deviceExtensions.push_back("VK_KHR_portability_subset");
     }
-    else
-    {
-        createInfo.enabledExtensionCount = 0;
-    }
+
+    createInfo.enabledExtensionCount = deviceExtensions.size();
+    createInfo.ppEnabledExtensionNames = deviceExtensions.data();
 
     if(enableValidationLayers)
     {

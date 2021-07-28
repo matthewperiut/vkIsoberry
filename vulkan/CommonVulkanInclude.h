@@ -15,3 +15,4 @@ extern bool enablePhysicalDeviceProperties2;
 extern bool enablePortabilitySubset;
 extern const bool enableValidationLayers;
 extern std::vector<const char*> validationLayers;
+extern std::vector<const char*> deviceExtensions;

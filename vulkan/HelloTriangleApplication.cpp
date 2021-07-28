@@ -1,4 +1,5 @@
 #include "HelloTriangleApplication.h"
+#include "swapchain/SwapChain.h"
 
 void HelloTriangleApplication::run()
 {
@@ -24,6 +25,7 @@ void HelloTriangleApplication::initVulkan()
     createSurface(instance, window, surface);
     physicalDevice = pickPhysicalDevice(instance, surface);
     createLogicalDevice(instance, physicalDevice, device, graphicsQueue, presentQueue, surface);
+    createSwapChain(physicalDevice, device, surface, window, swapChain, swapChainImages, swapChainImageFormat, swapChainExtent);
 }
 
 void HelloTriangleApplication::mainLoop()
@@ -36,7 +38,9 @@ void HelloTriangleApplication::mainLoop()
 
 void HelloTriangleApplication::cleanup()
 {
+    vkDestroySwapchainKHR(device, swapChain, nullptr);
     vkDestroyDevice(device, nullptr);
+
     vkDestroySurfaceKHR(instance, surface, nullptr);
     vkDestroyInstance(instance, nullptr);
 
