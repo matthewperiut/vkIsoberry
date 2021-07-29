@@ -1,7 +1,6 @@
 #include "CreateLogicalDevice.h"
-#include "../queue families/QueueFamilies.h"
 
-void createLogicalDevice(VkInstance& instance, VkPhysicalDevice& physicalDevice, VkDevice& device, VkQueue& graphicsQueue, VkQueue& presentQueue, VkSurfaceKHR& surface)
+void createLogicalDevice(VkDevice& device, VkPhysicalDevice& physicalDevice, VkInstance& instance, VkQueue& graphicsQueue, VkQueue& presentQueue, VkSurfaceKHR& surface)
 {
     QueueFamilyIndices indices = findQueueFamilies(physicalDevice, surface);
 

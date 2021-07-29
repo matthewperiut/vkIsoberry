@@ -1,8 +1,8 @@
 #include "ChoosePhysicalDevice.h"
 
-VkPhysicalDevice pickPhysicalDevice(VkInstance& instance, VkSurfaceKHR& surface)
+VkPhysicalDevice pickPhysicalDevice(VkPhysicalDevice& physicalDevice, VkInstance& instance, VkSurfaceKHR& surface)
 {
-    VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+    physicalDevice = VK_NULL_HANDLE;
     uint32_t deviceCount = 0;
     vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
     if (deviceCount == 0)

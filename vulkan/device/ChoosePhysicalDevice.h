@@ -5,7 +5,7 @@
 #include "../queue families/QueueFamilies.h"
 
 
-VkPhysicalDevice pickPhysicalDevice(VkInstance& instance, VkSurfaceKHR& surface);
+VkPhysicalDevice pickPhysicalDevice(VkPhysicalDevice& physicalDevice, VkInstance& instance, VkSurfaceKHR& surface);
 int rateDeviceSuitability(VkPhysicalDevice device);
 bool isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR& surface);
 bool checkDeviceExtensionSupport(VkPhysicalDevice device);

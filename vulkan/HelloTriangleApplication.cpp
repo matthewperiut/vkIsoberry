@@ -23,9 +23,9 @@ void HelloTriangleApplication::initWindow()
 void HelloTriangleApplication::initVulkan()
 {
     createInstance("Hello Triangle", VK_MAKE_VERSION(1,0,0), instance);
-    createSurface(instance, window, surface);
-    physicalDevice = pickPhysicalDevice(instance, surface);
-    createLogicalDevice(instance, physicalDevice, device, graphicsQueue, presentQueue, surface);
+    createSurface(surface, instance, window);
+    pickPhysicalDevice(physicalDevice, instance, surface);
+    createLogicalDevice(device, physicalDevice, instance, graphicsQueue, presentQueue, surface);
     createSwapChain(physicalDevice, device, surface, window, swapChain, swapChainImages, swapChainImageFormat, swapChainExtent);
     createImageViews(swapChainImages, swapChainImageViews, swapChainImageFormat, device);
 }

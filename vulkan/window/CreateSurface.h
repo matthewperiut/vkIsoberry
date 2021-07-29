@@ -2,4 +2,4 @@
 
 #include "../CommonVulkanInclude.h"
 
-void createSurface(VkInstance& instance, GLFWwindow* window, VkSurfaceKHR& surface);
+void createSurface(VkSurfaceKHR& surface, VkInstance& instance, GLFWwindow* window);
