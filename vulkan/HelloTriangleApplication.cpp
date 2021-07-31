@@ -1,6 +1,7 @@
 #include "HelloTriangleApplication.h"
 #include "swapchain/SwapChain.h"
 #include "image views/CreateImageViews.h"
+#include "graphics pipeline/CreateGraphicsPipeline.h"
 
 void HelloTriangleApplication::run()
 {
@@ -28,6 +29,7 @@ void HelloTriangleApplication::initVulkan()
     createLogicalDevice(device, physicalDevice, instance, graphicsQueue, presentQueue, surface);
     createSwapChain(physicalDevice, device, surface, window, swapChain, swapChainImages, swapChainImageFormat, swapChainExtent);
     createImageViews(swapChainImages, swapChainImageViews, swapChainImageFormat, device);
+    createGraphicsPipeline(device, swapChainExtent, pipelineLayout);
 }
 
 void HelloTriangleApplication::mainLoop()
@@ -40,6 +42,8 @@ void HelloTriangleApplication::mainLoop()
 
 void HelloTriangleApplication::cleanup()
 {
+    vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
+
     for (auto imageView : swapChainImageViews)
     {
         vkDestroyImageView(device, imageView, nullptr);
