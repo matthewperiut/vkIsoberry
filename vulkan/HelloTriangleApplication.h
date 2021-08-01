@@ -30,6 +30,9 @@ private:
 
     VkRenderPass renderPass;
     VkPipelineLayout pipelineLayout;
+    VkPipeline graphicsPipeline;
+
+    std::vector<VkFramebuffer> swapChainFrameBuffers;
 
 public:
     void run();

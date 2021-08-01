@@ -3,6 +3,7 @@
 #include "image views/CreateImageViews.h"
 #include "graphics pipeline/CreateGraphicsPipeline.h"
 #include "graphics pipeline/render pass/CreateRenderPass.h"
+#include "frame buffer/CreateFrameBuffers.h"
 
 void HelloTriangleApplication::run()
 {
@@ -31,7 +32,8 @@ void HelloTriangleApplication::initVulkan()
     createSwapChain(physicalDevice, device, surface, window, swapChain, swapChainImages, swapChainImageFormat, swapChainExtent);
     createImageViews(swapChainImages, swapChainImageViews, swapChainImageFormat, device);
     createRenderPass(device, swapChainImageFormat, renderPass);
-    createGraphicsPipeline(device, swapChainExtent, pipelineLayout);
+    createGraphicsPipeline(graphicsPipeline, device, swapChainExtent, pipelineLayout, renderPass);
+    createFrameBuffers(swapChainFrameBuffers, swapChainImageViews, device, renderPass, swapChainExtent);
 }
 
 void HelloTriangleApplication::mainLoop()
@@ -44,6 +46,11 @@ void HelloTriangleApplication::mainLoop()
 
 void HelloTriangleApplication::cleanup()
 {
+    for (auto framebuffer : swapChainFrameBuffers) {
+        vkDestroyFramebuffer(device, framebuffer, nullptr);
+    }
+
+    vkDestroyPipeline(device, graphicsPipeline, nullptr);
     vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
     vkDestroyRenderPass(device, renderPass, nullptr);
 
