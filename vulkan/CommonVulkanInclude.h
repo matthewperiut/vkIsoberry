@@ -11,6 +11,10 @@
 #include <vector>
 #include <set>
 
+const int MAX_FRAMES_IN_FLIGHT = 2;
+const uint32_t WIDTH = 800;
+const uint32_t HEIGHT = 600;
+
 extern bool enablePhysicalDeviceProperties2;
 extern bool enablePortabilitySubset;
 extern const bool enableValidationLayers;
