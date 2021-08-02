@@ -4,6 +4,9 @@
 #include "graphics pipeline/CreateGraphicsPipeline.h"
 #include "graphics pipeline/render pass/CreateRenderPass.h"
 #include "frame buffer/CreateFrameBuffers.h"
+#include "commands/CreateCommandBuffers.h"
+#include "commands/CreateCommandPool.h"
+#include "semaphore/CreateSemaphore.h"
 
 void HelloTriangleApplication::run()
 {
@@ -34,6 +37,10 @@ void HelloTriangleApplication::initVulkan()
     createRenderPass(device, swapChainImageFormat, renderPass);
     createGraphicsPipeline(graphicsPipeline, device, swapChainExtent, pipelineLayout, renderPass);
     createFrameBuffers(swapChainFrameBuffers, swapChainImageViews, device, renderPass, swapChainExtent);
+    createCommandPool(commandPool, device, physicalDevice, surface);
+    createCommandBuffers(commandBuffers, swapChainFrameBuffers, device, renderPass, swapChainExtent, graphicsPipeline, commandPool);
+    createSemaphore(imageAvailableSemaphore, device);
+    createSemaphore(renderFinishedSemaphore, device);
 }
 
 void HelloTriangleApplication::mainLoop()
@@ -41,11 +48,22 @@ void HelloTriangleApplication::mainLoop()
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
+        drawFrame();
     }
+}
+
+void HelloTriangleApplication::drawFrame()
+{
+
 }
 
 void HelloTriangleApplication::cleanup()
 {
+    vkDestroySemaphore(device, renderFinishedSemaphore, nullptr);
+    vkDestroySemaphore(device, imageAvailableSemaphore, nullptr);
+
+    vkDestroyCommandPool(device, commandPool, nullptr);
+
     for (auto framebuffer : swapChainFrameBuffers) {
         vkDestroyFramebuffer(device, framebuffer, nullptr);
     }
